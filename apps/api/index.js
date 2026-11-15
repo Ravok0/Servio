@@ -30,6 +30,17 @@ app.get("/health/db", async (req, res) => {
   }
 });
 
+// Liste des restaurants
+app.get("/api/restaurants", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT id, name, currency FROM restaurants");
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ status: "erreur", message: "Erreur serveur" });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Serveur Servio démarré sur http://localhost:${PORT}`);
 });
